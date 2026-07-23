@@ -39,7 +39,10 @@
 
         <div class="status-row">
           <p id="status" aria-live="polite"><b>X</b> başlıyor</p>
-          <button type="button" id="resetScores">Skoru sıfırla</button>
+          <div class="status-actions">
+            <button type="button" id="helpButton">Yardım</button>
+            <button type="button" id="resetScores">Skoru sıfırla</button>
+          </div>
         </div>
 
         <div class="board" id="board" role="grid" aria-label="3'e 3 oyun tahtası"></div>
@@ -50,5 +53,19 @@
         </button>
       </section>
     </main>
+    <div class="rules-overlay is-visible" id="rulesOverlay" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
+      <section class="rules-dialog">
+        <p class="eyebrow">NASIL OYNANIR?</p>
+        <h2 id="rulesTitle">Üç işareti hizala</h2>
+        <p>İki oyuncu aynı cihazda sırayla X ve O işaretlerini boş karelere yerleştirir.</p>
+        <ul>
+          <li>X her turda ilk hamleyi yapar; ardından oyuncular sırayla oynar.</li>
+          <li>Yatay, dikey veya çapraz üç işareti ilk tamamlayan turu kazanır.</li>
+          <li>Dokuz kare dolup üçlü oluşmazsa tur berabere biter.</li>
+          <li>“Yeni tur” skorları korur; “Skoru sıfırla” bütün seriyi yeniler.</li>
+        </ul>
+        <button class="rules-primary" id="closeRules" type="button">Oyuna başla</button>
+      </section>
+    </div>
   </body>
 </html>

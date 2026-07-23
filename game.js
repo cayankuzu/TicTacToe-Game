@@ -21,6 +21,9 @@ const oScore = document.querySelector("#oScore");
 const drawScore = document.querySelector("#drawScore");
 const nextRound = document.querySelector("#nextRound");
 const resetScores = document.querySelector("#resetScores");
+const helpButton = document.querySelector("#helpButton");
+const rulesOverlay = document.querySelector("#rulesOverlay");
+const closeRules = document.querySelector("#closeRules");
 
 function findWinner() {
   return winningLines.find(
@@ -97,6 +100,13 @@ nextRound.addEventListener("click", startRound);
 resetScores.addEventListener("click", () => {
   scores = { X: 0, O: 0, draw: 0 };
   startRound();
+});
+helpButton.addEventListener("click", () => {
+  closeRules.textContent = "Oyuna dön";
+  rulesOverlay.classList.add("is-visible");
+});
+closeRules.addEventListener("click", () => {
+  rulesOverlay.classList.remove("is-visible");
 });
 
 startRound();
