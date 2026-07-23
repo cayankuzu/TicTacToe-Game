@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="NumPy ile yazılan Tic-Tac-Toe oyununun tarayıcı sürümü."
+    />
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="game.js" defer></script>
+  </head>
+  <body>
+    <main class="game-shell">
+      <header>
+        <p class="eyebrow">ÜÇ HAMLEDE BİR ÇİZGİ</p>
+        <h1>Tic<br />Tac<br />Toe</h1>
+        <p class="intro">
+          Yan yana oynayın. Satırı, sütunu ya da çaprazı ilk tamamlayan turu alır.
+        </p>
+      </header>
+
+      <section class="play-area" aria-label="Tic Tac Toe oyun alanı">
+        <div class="scoreboard">
+          <div class="score-card is-x">
+            <span>OYUNCU X</span>
+            <strong id="xScore">0</strong>
+          </div>
+          <div class="score-card">
+            <span>BERABERE</span>
+            <strong id="drawScore">0</strong>
+          </div>
+          <div class="score-card is-o">
+            <span>OYUNCU O</span>
+            <strong id="oScore">0</strong>
+          </div>
+        </div>
+
+        <div class="status-row">
+          <p id="status" aria-live="polite"><b>X</b> başlıyor</p>
+          <button type="button" id="resetScores">Skoru sıfırla</button>
+        </div>
+
+        <div class="board" id="board" role="grid" aria-label="3'e 3 oyun tahtası"></div>
+
+        <button type="button" class="next-round" id="nextRound">
+          Yeni tur
+          <span>↗</span>
+        </button>
+      </section>
+    </main>
+  </body>
+</html>
