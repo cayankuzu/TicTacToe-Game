@@ -67,6 +67,76 @@ h1 {
   width: min(100%, 590px);
 }
 
+.mode-picker {
+  display: grid;
+  margin-bottom: 10px;
+  padding: 10px;
+  grid-template-columns: minmax(120px, 0.7fr) 1.3fr;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(29, 29, 27, 0.84);
+}
+
+.mode-picker > div:first-child {
+  display: grid;
+  gap: 4px;
+  padding-left: 5px;
+}
+
+.mode-picker > div:first-child span {
+  color: var(--muted);
+  font-size: 0.57rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+}
+
+.mode-picker > div:first-child strong {
+  font-size: 0.75rem;
+}
+
+.mode-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+.mode-options button {
+  display: grid;
+  min-height: 48px;
+  padding: 6px 4px;
+  place-items: center;
+  gap: 1px;
+  color: #c9c3b4;
+  border: 1px solid #3d3c37;
+  border-radius: 10px;
+  background: #252521;
+  font-size: 0.72rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.mode-options button small {
+  color: #79766d;
+  font-size: 0.49rem;
+  font-weight: 700;
+}
+
+.mode-options button:hover {
+  border-color: #77736a;
+}
+
+.mode-options button.is-active {
+  color: #141310;
+  border-color: var(--paper);
+  background: var(--paper);
+}
+
+.mode-options button.is-active small {
+  color: #615e56;
+}
+
 .scoreboard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -139,7 +209,7 @@ h1 {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--grid-size), 1fr);
   gap: 9px;
   aspect-ratio: 1;
 }
@@ -204,6 +274,40 @@ h1 {
   border-color: var(--paper);
   background: #292823;
   box-shadow: inset 0 0 35px rgba(239, 233, 216, 0.08);
+}
+
+.board[data-size="4"] {
+  gap: 7px;
+}
+
+.board[data-size="5"],
+.board[data-size="6"] {
+  gap: 5px;
+}
+
+.board[data-size="4"] .cell {
+  border-radius: 15px;
+}
+
+.board[data-size="5"] .cell,
+.board[data-size="6"] .cell {
+  border-radius: 11px;
+}
+
+.board[data-size="5"] .cell.o::before {
+  border-width: 6px;
+}
+
+.board[data-size="6"] .cell.o::before {
+  border-width: 5px;
+}
+
+.board[data-size="5"] .cell.x::before,
+.board[data-size="5"] .cell.x::after,
+.board[data-size="6"] .cell.x::before,
+.board[data-size="6"] .cell.x::after {
+  width: 11%;
+  height: 58%;
 }
 
 .next-round {
@@ -301,6 +405,15 @@ h1 {
 }
 
 @media (max-width: 460px) {
+  .mode-picker {
+    grid-template-columns: 1fr;
+  }
+
+  .mode-picker > div:first-child {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+
   .status-row { align-items: flex-start; flex-direction: column; padding: 12px 0; gap: 8px; }
 
   .score-card {

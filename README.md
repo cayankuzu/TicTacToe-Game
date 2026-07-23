@@ -2,7 +2,9 @@
 
 NumPy ile geliştirilen özgün Tic-Tac-Toe çalışmasının tarayıcıda oynanabilen sürümü.
 
-İki oyuncu aynı cihazda sırayla X ve O yerleştirir. Satır, sütun ve iki çaprazın toplamlarını kontrol eden özgün kazanma mantığı web arayüzünde korunur.
+İki oyuncu aynı cihazda sırayla X ve O yerleştirir. Satır, sütun ve çapraz
+kazanma mantığı 3×3, 4×4, 5×5 ve 6×6 tahta seçeneklerine uyarlanmıştır.
+Seçilen moda göre üç, dört veya beş işareti ilk hizalayan turu kazanır.
 
 ## Web sürümü
 
