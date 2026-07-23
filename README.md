@@ -6,7 +6,9 @@ NumPy ile geliştirilen özgün Tic-Tac-Toe çalışmasının tarayıcıda oynan
 
 ## Web sürümü
 
-`index.html` dosyasını açarak kurulum yapmadan oynayabilirsiniz.
+[Tic Tac Toe'yu tarayıcıda oyna](https://tic-tac-toe-game-delta-jade.vercel.app/)
+
+Yerelde `index.html` dosyasını açarak da kurulum yapmadan oynayabilirsiniz.
 
 ## Özgün çalışma
 
