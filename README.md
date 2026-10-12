@@ -2,9 +2,16 @@
 
 NumPy ile geliştirilen özgün Tic-Tac-Toe çalışmasının tarayıcıda oynanabilen sürümü.
 
-İki oyuncu aynı cihazda sırayla X ve O yerleştirir. Satır, sütun ve çapraz
-kazanma mantığı 3×3, 4×4, 5×5 ve 6×6 tahta seçeneklerine uyarlanmıştır.
-Seçilen moda göre üç, dört veya beş işareti ilk hizalayan turu kazanır.
+Yapay zekâya ya da arkadaşına karşı seri maçlar oynanır:
+
+- **Yapay zekâ rakip:** Çırak, Usta ve Efsane zorlukları. 3×3'te Efsane minimax ile
+  kusursuz oynar; büyük tahtalarda tehdit ve fırsat analizi yapar.
+- **Tahtalar:** 3×3 ve 4×4 tam sıra, 5×5 dörtlü, 6×6 beşli çizgi ister.
+- **Seri maç:** tek tur, ilk 2'ye ya da ilk 3'e; ilk hamle her turda el değiştirir.
+- **Hamle süresi:** isteğe bağlı 10 sn ya da 5 sn Blitz; süre biterse rastgele hamle yapılır.
+- **Kontroller:** fare/dokunmatik ya da klavye (`← → ↑ ↓`, `Enter`, `U` geri al,
+  `R` turu yenile, `M` ses, `Esc` duraklat).
+- Rekorlar tarayıcıda saklanır; sesler Web Audio ile üretilir.
 
 ## Web sürümü
 

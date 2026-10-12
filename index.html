@@ -2,102 +2,221 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0709" />
     <meta
       name="description"
-      content="NumPy ile yazılan Tic-Tac-Toe oyununun tarayıcı sürümü."
+      content="Tic Tac Toe · yapay zekâya ya da arkadaşına karşı 3×3'ten 6×6'ya uzanan seri maçlar."
     />
-    <title>Tic Tac Toe</title>
+    <title>Tic Tac Toe · MeMoDe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="game.js" defer></script>
   </head>
   <body>
-    <main class="game-shell">
-      <header>
-        <p class="eyebrow">BİR TAHTA · İKİ OYUNCU</p>
-        <h1>Tic<br />Tac<br />Toe</h1>
-        <p class="intro">
-          Tahta boyutunu seçin. Yatay, dikey ya da çapraz hedef çizgiyi ilk
-          tamamlayan turu alır.
-        </p>
+    <div class="backdrop" aria-hidden="true">
+      <div class="backdrop__glow backdrop__glow--x"></div>
+      <div class="backdrop__glow backdrop__glow--o"></div>
+      <div class="backdrop__grid"></div>
+    </div>
+
+    <!-- ============================== TITLE / MENU ============================== -->
+    <section class="screen screen--menu is-active" id="menuScreen" aria-labelledby="menuTitle">
+      <div class="menu">
+        <p class="kicker">MeMoDe sunar</p>
+        <h1 class="logo" id="menuTitle" lang="en">Tic Tac Toe</h1>
+        <p class="tagline">Üçlü sıradan beşli çizgiye · tek tahta, tek kazanan</p>
+
+        <nav class="menu__list" aria-label="Ana menü">
+          <button class="menu__item is-primary" type="button" data-mode="ai">
+            <span>Yapay zekâya karşı</span>
+            <small>Tek oyuncu · üç zorluk</small>
+          </button>
+          <button class="menu__item" type="button" data-mode="duo">
+            <span>İki oyuncu</span>
+            <small>Aynı cihazda düello</small>
+          </button>
+          <button class="menu__item" type="button" data-open="rules">
+            <span>Nasıl oynanır</span>
+            <small>Kurallar ve kontroller</small>
+          </button>
+        </nav>
+
+        <dl class="menu__record" id="menuRecord" aria-label="Rekorlar"></dl>
+      </div>
+
+      <div class="menu__stage" aria-hidden="true">
+        <div class="demo-board" id="demoBoard"></div>
+      </div>
+
+      <footer class="footer">© 2026 <span lang="en">Tic Tac Toe</span> <i>•</i> MeMoDe yapımı <i>•</i> Sürüm 2.0</footer>
+    </section>
+
+    <!-- ================================ SETUP ================================= -->
+    <section class="screen screen--setup" id="setupScreen" aria-labelledby="setupTitle">
+      <div class="panel setup">
+        <header class="panel__head">
+          <p class="kicker" id="setupKicker">Yapay zekâya karşı</p>
+          <h2 id="setupTitle">Maçı hazırla</h2>
+        </header>
+
+        <div class="field" id="difficultyField">
+          <span class="field__label">Zorluk</span>
+          <div class="segmented" role="radiogroup" aria-label="Zorluk" data-setting="difficulty">
+            <button type="button" role="radio" data-value="easy">Çırak</button>
+            <button type="button" role="radio" data-value="normal">Usta</button>
+            <button type="button" role="radio" data-value="hard">Efsane</button>
+          </div>
+          <p class="field__hint" id="difficultyHint"></p>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Tahta</span>
+          <div class="segmented segmented--boards" role="radiogroup" aria-label="Tahta" data-setting="board">
+            <button type="button" role="radio" data-value="3"><b>3×3</b><small>3 sıra</small></button>
+            <button type="button" role="radio" data-value="4"><b>4×4</b><small>4 sıra</small></button>
+            <button type="button" role="radio" data-value="5"><b>5×5</b><small>4 sıra</small></button>
+            <button type="button" role="radio" data-value="6"><b>6×6</b><small>5 sıra</small></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Seri</span>
+          <div class="segmented" role="radiogroup" aria-label="Seri" data-setting="series">
+            <button type="button" role="radio" data-value="1">Tek tur</button>
+            <button type="button" role="radio" data-value="2">İlk 2'ye</button>
+            <button type="button" role="radio" data-value="3">İlk 3'e</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field__label">Hamle süresi</span>
+          <div class="segmented" role="radiogroup" aria-label="Hamle süresi" data-setting="timer">
+            <button type="button" role="radio" data-value="0">Kapalı</button>
+            <button type="button" role="radio" data-value="10">10 sn</button>
+            <button type="button" role="radio" data-value="5">Blitz · 5 sn</button>
+          </div>
+        </div>
+
+        <footer class="panel__actions">
+          <button class="btn btn--ghost" type="button" data-action="back">Geri</button>
+          <button class="btn btn--primary" type="button" data-action="start">Maça başla</button>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ================================ GAME ================================== -->
+    <section class="screen screen--game" id="gameScreen" aria-label="Oyun">
+      <header class="topbar">
+        <div class="topbar__title">
+          <strong lang="en">Tic Tac Toe</strong>
+          <span id="modeChip"></span>
+        </div>
+        <div class="topbar__actions">
+          <button class="icon-btn" type="button" id="soundToggle" aria-label="Sesi kapat" title="Ses (M)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" /><path class="wave" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" /></svg>
+          </button>
+          <button class="icon-btn" type="button" data-open="rules" aria-label="Nasıl oynanır" title="Kurallar (H)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M9.5 9.2a2.6 2.6 0 0 1 5 .8c0 1.8-2.5 2.2-2.5 3.8M12 17h.01" /></svg>
+          </button>
+          <button class="icon-btn" type="button" id="pauseButton" aria-label="Duraklat" title="Duraklat (Esc)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg>
+          </button>
+        </div>
       </header>
 
-      <section class="play-area" aria-label="Tic Tac Toe oyun alanı">
-        <div class="mode-picker" aria-label="Oyun tahtası seçimi">
-          <div>
-            <span>TAHTA</span>
-            <strong id="modeSummary">3 × 3 · Üçlü sıra</strong>
+      <div class="arena">
+        <article class="player-card player-card--x" id="cardX">
+          <div class="player-card__mark"><svg viewBox="0 0 100 100" aria-hidden="true"><path d="M26 26 74 74M74 26 26 74" /></svg></div>
+          <div class="player-card__body">
+            <span class="player-card__role" id="roleX">Oyuncu 1</span>
+            <h2 class="player-card__name" id="nameX">X</h2>
+            <div class="pips" id="pipsX"></div>
           </div>
-          <div class="mode-options" id="modeOptions">
-            <button class="is-active" type="button" data-size="3" data-win="3">
-              3×3
-              <small>3 sıra</small>
-            </button>
-            <button type="button" data-size="4" data-win="4">
-              4×4
-              <small>4 sıra</small>
-            </button>
-            <button type="button" data-size="5" data-win="4">
-              5×5
-              <small>4 sıra</small>
-            </button>
-            <button type="button" data-size="6" data-win="5">
-              6×6
-              <small>5 sıra</small>
-            </button>
+          <strong class="player-card__score" id="scoreX">0</strong>
+        </article>
+
+        <div class="board-wrap">
+          <div class="round-chip" id="roundChip"></div>
+          <div class="board-frame">
+            <div class="board" id="board" role="grid" aria-label="Oyun tahtası"></div>
+            <svg class="win-line" id="winLine" aria-hidden="true"><line x1="0" y1="0" x2="0" y2="0" /></svg>
+          </div>
+          <div class="turn-bar">
+            <p class="turn-bar__text" id="status" aria-live="polite"></p>
+            <div class="timer" id="timer" hidden><i id="timerFill"></i></div>
           </div>
         </div>
 
-        <div class="scoreboard">
-          <div class="score-card is-x">
-            <span>OYUNCU X</span>
-            <strong id="xScore">0</strong>
+        <article class="player-card player-card--o" id="cardO">
+          <div class="player-card__mark"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="25" /></svg></div>
+          <div class="player-card__body">
+            <span class="player-card__role" id="roleO">Oyuncu 2</span>
+            <h2 class="player-card__name" id="nameO">O</h2>
+            <div class="pips" id="pipsO"></div>
           </div>
-          <div class="score-card">
-            <span>BERABERE</span>
-            <strong id="drawScore">0</strong>
-          </div>
-          <div class="score-card is-o">
-            <span>OYUNCU O</span>
-            <strong id="oScore">0</strong>
-          </div>
+          <strong class="player-card__score" id="scoreO">0</strong>
+        </article>
+      </div>
+
+      <footer class="game-actions">
+        <button class="btn btn--ghost" type="button" id="undoButton"><kbd>U</kbd> Geri al</button>
+        <button class="btn btn--ghost" type="button" id="restartButton"><kbd>R</kbd> Turu yenile</button>
+      </footer>
+    </section>
+
+    <!-- =============================== OVERLAYS =============================== -->
+    <div class="overlay" id="pauseOverlay" role="dialog" aria-modal="true" aria-labelledby="pauseTitle" hidden>
+      <div class="panel panel--compact">
+        <header class="panel__head">
+          <p class="kicker">Oyun durdu</p>
+          <h2 id="pauseTitle">Duraklatıldı</h2>
+        </header>
+        <div class="stack">
+          <button class="btn btn--primary" type="button" data-action="resume">Devam et</button>
+          <button class="btn btn--ghost" type="button" data-action="restart-match">Maçı yeniden başlat</button>
+          <button class="btn btn--ghost" type="button" data-action="setup">Ayarları değiştir</button>
+          <button class="btn btn--ghost" type="button" data-action="menu">Ana menü</button>
         </div>
-
-        <div class="status-row">
-          <p id="status" aria-live="polite"><b>X</b> başlıyor</p>
-          <div class="status-actions">
-            <button type="button" id="helpButton">Yardım</button>
-            <button type="button" id="resetScores">Skoru sıfırla</button>
-          </div>
-        </div>
-
-        <div
-          class="board"
-          id="board"
-          role="grid"
-          aria-label="3'e 3 oyun tahtası"
-        ></div>
-
-        <button type="button" class="next-round" id="nextRound">
-          Yeni tur
-          <span>↗</span>
-        </button>
-      </section>
-    </main>
-    <div class="rules-overlay is-visible" id="rulesOverlay" role="dialog" aria-modal="true" aria-labelledby="rulesTitle">
-      <section class="rules-dialog">
-        <p class="eyebrow">NASIL OYNANIR?</p>
-        <h2 id="rulesTitle">Hedef çizgiyi tamamla</h2>
-        <p>İki oyuncu aynı cihazda sırayla X ve O işaretlerini boş karelere yerleştirir.</p>
-        <ul>
-          <li>X her turda ilk hamleyi yapar; ardından oyuncular sırayla oynar.</li>
-          <li>3×3 ve 4×4 klasik tam sıra; 5×5 dört, 6×6 beş işaret ister.</li>
-          <li>Yatay, dikey veya çapraz hedef uzunluğu ilk tamamlayan kazanır.</li>
-          <li>Bütün kareler dolup hedef çizgi oluşmazsa tur berabere biter.</li>
-          <li>“Yeni tur” skorları korur; “Skoru sıfırla” bütün seriyi yeniler.</li>
-        </ul>
-        <button class="rules-primary" id="closeRules" type="button">Oyuna başla</button>
-      </section>
+      </div>
     </div>
+
+    <div class="overlay overlay--result" id="resultOverlay" role="dialog" aria-modal="true" aria-labelledby="resultTitle" hidden>
+      <div class="panel panel--result">
+        <p class="kicker" id="resultKicker">Tur bitti</p>
+        <h2 class="result-title" id="resultTitle">X kazandı</h2>
+        <p class="result-score" id="resultScore">1 – 0</p>
+        <p class="result-note" id="resultNote"></p>
+        <div class="stack stack--row">
+          <button class="btn btn--primary" type="button" id="resultPrimary">Sonraki tur</button>
+          <button class="btn btn--ghost" type="button" data-action="menu">Ana menü</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="rulesOverlay" role="dialog" aria-modal="true" aria-labelledby="rulesTitle" hidden>
+      <div class="panel rules">
+        <header class="panel__head">
+          <p class="kicker">Nasıl oynanır</p>
+          <h2 id="rulesTitle">Çizgiyi ilk tamamlayan kazanır</h2>
+        </header>
+        <ul class="rules__list">
+          <li><b>Amaç</b><span>İşaretlerini yatay, dikey ya da çapraz tek sıraya diz. 3×3 ve 4×4'te tam sıra; 5×5'te dört, 6×6'da beş işaret gerekir.</span></li>
+          <li><b>Seri</b><span>Seçtiğin sayıda turu ilk kazanan maçı alır. Her turda ilk hamle sırası el değiştirir.</span></li>
+          <li><b>Hamle süresi</b><span>Süre açıksa hamleni zamanında yapmazsan tahta senin yerine rastgele bir kareye oynar.</span></li>
+          <li><b>Kontroller</b><span><kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd> kare seç · <kbd>Enter</kbd> oyna · <kbd>U</kbd> geri al · <kbd>R</kbd> turu yenile · <kbd>M</kbd> ses · <kbd>Esc</kbd> duraklat</span></li>
+        </ul>
+        <footer class="panel__actions">
+          <button class="btn btn--primary" type="button" data-action="close-rules">Anladım</button>
+        </footer>
+      </div>
+    </div>
+
+    <div class="confetti" id="confetti" aria-hidden="true"></div>
   </body>
 </html>
